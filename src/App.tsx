@@ -8,6 +8,7 @@ function App() {
     email?: string;
   }>({});
   const [requestSubmitted, setRequestSubmitted] = useState(false);
+  const [contactFormChecked, setContactFormChecked] = useState(false);
   const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
   const isHomePage = currentPath === "/";
   const isAboutPage = currentPath === "/about";
@@ -18,6 +19,58 @@ function App() {
   const homeHref = isHomePage ? "#home" : "/#home";
 
   useEffect(() => {
+    const pageMetadata: Record<string, { title: string; description: string }> = {
+      "/": {
+        title: "Her Legacy Agric | Your dreams will always live on.",
+        description:
+          "Her Legacy Agric is a start-up Zambian agribusiness preparing to farm maize and soya beans near Lusaka in the first half of 2027.",
+      },
+      "/about": {
+        title: "About | Her Legacy Agric",
+        description:
+          "Learn about Her Legacy Agric, its vision for food security in Zambia, and its plans to grow crops and process them into finished products.",
+      },
+      "/what-we-grow-and-make": {
+        title: "What We Grow and Make | Her Legacy Agric",
+        description:
+          "Explore Her Legacy Agric's planned maize and soya bean farming and future crop and product plans.",
+      },
+      "/our-roadmap": {
+        title: "Our Roadmap | Her Legacy Agric",
+        description:
+          "Explore Her Legacy Agric's four-phase plan: farming, processing, diversification, and expansion.",
+      },
+      "/invest-and-partner": {
+        title: "Invest and Partner | Her Legacy Agric",
+        description:
+          "Learn about Her Legacy Agric's plans and request information about investing or partnering.",
+      },
+      "/contact": {
+        title: "Contact | Her Legacy Agric",
+        description:
+          "Contact Her Legacy Agric. Contact details are to be added; the message form is a demo and does not send submissions.",
+      },
+    };
+    const metadata = pageMetadata[currentPath] ?? pageMetadata["/"];
+    document.title = metadata.title;
+
+    const description = document.querySelector<HTMLMetaElement>(
+      'meta[name="description"]',
+    );
+    if (description) description.content = metadata.description;
+
+    const openGraphTitle = document.querySelector<HTMLMetaElement>(
+      'meta[property="og:title"]',
+    );
+    if (openGraphTitle) openGraphTitle.content = metadata.title;
+
+    const openGraphDescription = document.querySelector<HTMLMetaElement>(
+      'meta[property="og:description"]',
+    );
+    if (openGraphDescription) openGraphDescription.content = metadata.description;
+  }, [currentPath]);
+
+  useEffect(() => {
     function handleEscape(event: KeyboardEvent) {
       if (event.key === "Escape") setMenuOpen(false);
     }
@@ -26,34 +79,12 @@ function App() {
     return () => window.removeEventListener("keydown", handleEscape);
   }, []);
 
-  useEffect(() => {
-    if (isAboutPage) {
-      document.title = "About Her Legacy Agric";
-    } else if (isCropsPage) {
-      document.title = "What We Grow and Make | Her Legacy Agric";
-    } else if (isRoadmapPage) {
-      document.title = "Our Roadmap | Her Legacy Agric";
-    } else if (isInvestorPage) {
-      document.title = "Invest & Partner | Her Legacy Agric";
-    } else if (isContactPage) {
-      document.title = "Contact | Her Legacy Agric";
-    }
-  }, [isAboutPage, isCropsPage, isRoadmapPage, isInvestorPage, isContactPage]);
-
   const pageNavigation = [
     { label: "Home", href: homeHref },
     { label: "About", href: "/about" },
     { label: "What we grow", href: "/what-we-grow-and-make" },
     { label: "Our roadmap", href: "/our-roadmap" },
     { label: "Invest & partner", href: "/invest-and-partner" },
-    {
-      label: "Our work",
-      href: isHomePage ? "#our-work" : "/#our-work",
-    },
-    {
-      label: "Impact",
-      href: isHomePage ? "#impact" : "/#impact",
-    },
   ];
 
   function handleRequestSubmit(event: FormEvent<HTMLFormElement>) {
@@ -82,6 +113,11 @@ function App() {
     }
 
     setRequestSubmitted(true);
+  }
+
+  function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setContactFormChecked(true);
   }
 
   return (
@@ -228,7 +264,8 @@ function App() {
                   <h3>Mission</h3>
                   <p>
                     To grow crops and process them into finished products,
-                    beginning with plans to farm maize and soya beans in Lusaka the first half of 2027.
+                    beginning with planned maize and soya bean farming on leased,
+                    irrigated land near Lusaka in the first half of 2027.
                   </p>
                 </article>
               </div>
@@ -692,6 +729,91 @@ function App() {
                   </div>
                 </dl>
               </section>
+
+              <section
+                className="contact-message"
+                aria-labelledby="contact-message-title"
+              >
+                <div className="contact-message-intro">
+                  <p className="contact-message-eyebrow">Send a message</p>
+                  <h2 id="contact-message-title">We’d love to hear from you.</h2>
+                  <p>
+                    Share a little about what you’d like to discuss, and leave
+                    your contact details.
+                  </p>
+                  <p className="contact-message-notice">
+                    Demo only: this form does not send or store submissions. A
+                    submission service must be connected before launch.
+                  </p>
+                </div>
+
+                <form
+                  className="contact-message-form"
+                  onSubmit={handleContactSubmit}
+                  onChange={() => setContactFormChecked(false)}
+                >
+                  <div className="contact-message-field">
+                    <label htmlFor="contact-name">
+                      Name <span>(required)</span>
+                    </label>
+                    <input
+                      autoComplete="name"
+                      id="contact-name"
+                      name="name"
+                      required
+                    />
+                  </div>
+
+                  <div className="contact-message-field">
+                    <label htmlFor="contact-email">
+                      Email address <span>(required)</span>
+                    </label>
+                    <input
+                      autoComplete="email"
+                      id="contact-email"
+                      name="email"
+                      required
+                      type="email"
+                    />
+                  </div>
+
+                  <div className="contact-message-field">
+                    <label htmlFor="contact-phone">
+                      Phone <span>(optional)</span>
+                    </label>
+                    <input
+                      autoComplete="tel"
+                      id="contact-phone"
+                      name="phone"
+                      type="tel"
+                    />
+                  </div>
+
+                  <div className="contact-message-field contact-message-body">
+                    <label htmlFor="contact-message">
+                      Message <span>(required)</span>
+                    </label>
+                    <textarea
+                      id="contact-message"
+                      name="message"
+                      required
+                      rows={5}
+                    />
+                  </div>
+
+                  <button className="contact-message-submit" type="submit">
+                    Check message <span aria-hidden="true">↗</span>
+                  </button>
+
+                  {contactFormChecked && (
+                    <p className="contact-message-success" role="status">
+                      Your details passed the browser checks. This demo has not
+                      sent or stored anything; a submission service is needed
+                      before launch.
+                    </p>
+                  )}
+                </form>
+              </section>
             </div>
           </section>
         </main>
@@ -701,30 +823,27 @@ function App() {
           <div className="hero-copy">
             <p className="eyebrow">
               <span className="eyebrow-rule" aria-hidden="true" />
-              Rooted in purpose. Growing for generations.
+              Her Legacy Agric
             </p>
             <h1 id="hero-title">
-              We grow more
+              Your dreams
               <br />
-              than crops.
+              will always
               <br />
-              <span>We grow possibility.</span>
+              <span>live on.</span>
             </h1>
             <p className="hero-description">
-              Her Legacy Agric is cultivating a future where women, land, and
-              local communities can thrive together.
+              A start-up Zambian agribusiness preparing to farm maize and soya
+              beans on leased, irrigated land near Lusaka, starting in the
+              first half of 2027.
             </p>
             <div className="hero-actions">
-              <a className="button button-primary" href="#our-work">
-                Discover our work <span aria-hidden="true">↗</span>
+              <a className="button button-primary" href="/invest-and-partner">
+                Partner With Us <span aria-hidden="true">↗</span>
               </a>
-              <a className="text-link" href="/about">
-                Our story <span aria-hidden="true">→</span>
+              <a className="button button-secondary" href="/about">
+                Our Story
               </a>
-            </div>
-            <div className="hero-note">
-              <span className="note-icon" aria-hidden="true">✳</span>
-              <span>For the earth. For her. For what comes next.</span>
             </div>
           </div>
 
@@ -928,6 +1047,43 @@ function App() {
         </section>
       </main>
       )}
+      <footer className="site-footer">
+        <div className="site-footer-inner">
+          <a className="site-footer-brand" href="/" aria-label="Her Legacy Agric home">
+            <span className="site-footer-logo">
+              <img src="/her-legacy-logo.png" alt="" />
+            </span>
+            <span className="site-footer-wordmark">
+              <span>Her Legacy</span>
+              <span className="site-footer-subtitle">Agric</span>
+            </span>
+          </a>
+
+          <nav className="site-footer-navigation" aria-label="Footer navigation">
+            <p className="site-footer-heading">Explore</p>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/what-we-grow-and-make">What we grow and make</a></li>
+              <li><a href="/our-roadmap">Our roadmap</a></li>
+              <li><a href="/invest-and-partner">Invest and partner</a></li>
+              <li><a href="/contact">Contact</a></li>
+            </ul>
+          </nav>
+
+          <div className="site-footer-whatsapp" role="status" aria-label="WhatsApp contact unavailable">
+            <p className="site-footer-heading">WhatsApp</p>
+            <p className="site-footer-whatsapp-label">Click to chat</p>
+            <p className="site-footer-whatsapp-status">
+              <span>[number]</span>
+              <span>Number to be added · not available yet</span>
+            </p>
+          </div>
+        </div>
+        <div className="site-footer-bottom">
+          <p>© {new Date().getFullYear()} Her Legacy Agric. All rights reserved.</p>
+        </div>
+      </footer>
     </>
   );
 }

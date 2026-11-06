@@ -1,19 +1,21 @@
 :root {
-  font-family: "DM Sans", sans-serif;
-  color: #18371f;
-  background: #f7f5eb;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--forest);
+  background: var(--white);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-optical-sizing: auto;
   font-weight: 400;
 
-  --forest: #18371f;
-  --deep-forest: #102b19;
-  --leaf: #5b7f35;
-  --gold: #c8983f;
-  --cream: #f7f5eb;
+  --forest: #20441e;
+  --leaf: #3e681e;
+  --field: #4b731b;
+  --gold: #cb9f3c;
+  --earth: #725c37;
+  --white: #ffffff;
+  --cream: #faf7ef;
+  --deep-forest: #18371f;
   --muted: #65705e;
 }
 
@@ -30,7 +32,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background: var(--cream);
+  background: var(--white);
 }
 
 body::before {
@@ -71,7 +73,8 @@ button:focus-visible {
 }
 
 .site-header {
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 5;
   display: flex;
   width: min(100% - 9vw, 1440px);
@@ -80,6 +83,7 @@ button:focus-visible {
   justify-content: space-between;
   margin: 0 auto;
   border-bottom: 1px solid rgb(24 55 31 / 13%);
+  background: rgb(255 255 255 / 96%);
 }
 
 .brand {
@@ -285,8 +289,8 @@ h1 span {
 }
 
 .button-primary {
-  background: var(--forest);
-  color: #fffdf6;
+  background: var(--gold);
+  color: var(--deep-forest);
   box-shadow: 7px 7px 0 #d9c99c;
   transition:
     background 180ms ease,
@@ -296,8 +300,20 @@ h1 span {
 
 .button-primary:hover {
   transform: translate(2px, 2px);
-  background: #294c2c;
+  background: #b88d2e;
   box-shadow: 5px 5px 0 #d9c99c;
+}
+
+.button-secondary {
+  border: 1px solid var(--forest);
+  background: transparent;
+  color: var(--forest);
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.button-secondary:hover {
+  background: var(--forest);
+  color: var(--white);
 }
 
 .button span {
@@ -3180,5 +3196,365 @@ h1 span {
   .contact-details-list > div:nth-child(even) {
     padding: 1.05rem 0;
     border-left: 0;
+  }
+}
+
+.contact-message {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: start;
+  padding-top: clamp(2.5rem, 5vw, 4.5rem);
+  border-top: 1px solid rgb(24 55 31 / 22%);
+}
+
+.contact-message-intro {
+  max-width: 430px;
+}
+
+.contact-message-eyebrow {
+  margin: 0 0 0.8rem;
+  color: #80622d;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.contact-message-intro h2 {
+  margin: 0;
+  color: var(--deep-forest);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2rem, 3.4vw, 3.15rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 1.1;
+}
+
+.contact-message-intro > p:not(.contact-message-eyebrow) {
+  margin: 1rem 0 0;
+  color: #52604d;
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.contact-message-intro .contact-message-notice {
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--gold);
+  color: #596552;
+  font-size: 0.78rem;
+}
+
+.contact-message-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.15rem;
+  padding: clamp(1.35rem, 3vw, 2rem);
+  border: 1px solid rgb(24 55 31 / 13%);
+  background: rgb(255 253 246 / 82%);
+  box-shadow: 7px 7px 0 rgb(217 201 156 / 68%);
+}
+
+.contact-message-field {
+  display: grid;
+  align-content: start;
+  gap: 0.45rem;
+}
+
+.contact-message-field label {
+  color: var(--deep-forest);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.contact-message-field label span {
+  color: #65705e;
+  font-size: 0.69rem;
+  font-weight: 400;
+}
+
+.contact-message-field input,
+.contact-message-field textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid rgb(24 55 31 / 30%);
+  border-radius: 0;
+  background: #fffefa;
+  color: var(--deep-forest);
+  font: inherit;
+}
+
+.contact-message-field textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.contact-message-field input:focus-visible,
+.contact-message-field textarea:focus-visible {
+  border-color: var(--forest);
+  outline: 3px solid rgb(200 152 63 / 38%);
+  outline-offset: 2px;
+}
+
+.contact-message-field input:user-invalid,
+.contact-message-field textarea:user-invalid {
+  border-color: #9a3b2e;
+}
+
+.contact-message-body {
+  grid-column: 1 / -1;
+}
+
+.contact-message-submit {
+  display: inline-flex;
+  min-height: 48px;
+  grid-column: 1 / -1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--forest);
+  background: var(--forest);
+  color: #fffdf3;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: left;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.contact-message-submit:hover {
+  background: #264a2d;
+}
+
+.contact-message-submit:focus-visible {
+  outline: 3px solid #a47725;
+  outline-offset: 4px;
+}
+
+.contact-message-success {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 0.9rem 1rem;
+  border-left: 3px solid var(--leaf);
+  background: #edf1e4;
+  color: var(--deep-forest);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 1000px) {
+  .contact-message {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .contact-message {
+    grid-column: 1;
+    grid-template-columns: 1fr;
+    gap: 1.7rem;
+    padding-top: 2.4rem;
+  }
+
+  .contact-message-intro h2 {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+
+  .contact-message-form {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.25rem;
+    box-shadow: 5px 5px 0 rgb(217 201 156 / 68%);
+  }
+
+  .contact-message-body {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 420px) {
+  .contact-message-form {
+    padding: 1.05rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-message-submit {
+    transition-duration: 0.01ms;
+  }
+}
+
+.site-footer {
+  padding: clamp(2.5rem, 6vw, 5rem) max(4.5vw, calc((100% - 1440px) / 2));
+  background: var(--deep-forest);
+  color: #f7f5eb;
+}
+
+.site-footer-inner {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(300px, 1.2fr) minmax(220px, 0.8fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.site-footer-brand {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.8rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-footer-logo {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  flex: 0 0 auto;
+  overflow: hidden;
+  place-items: center;
+  border-radius: 50%;
+  background: #fffdf6;
+}
+
+.site-footer-logo img {
+  width: 49px;
+  height: 49px;
+  object-fit: contain;
+}
+
+.site-footer-wordmark {
+  display: grid;
+  gap: 0.2rem;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.site-footer-subtitle {
+  color: #e2bd70;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.31em;
+  text-transform: uppercase;
+}
+
+.site-footer-heading {
+  margin: 0 0 1rem;
+  color: #e2bd70;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.site-footer-navigation ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer-navigation a {
+  display: inline-block;
+  color: #f0efe4;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.25em;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+.site-footer-navigation a:hover {
+  color: #e2bd70;
+  text-decoration-color: currentColor;
+}
+
+.site-footer-whatsapp {
+  padding-left: 1.25rem;
+  border-left: 1px solid rgb(247 245 235 / 25%);
+}
+
+.site-footer-whatsapp-label {
+  margin: 0 0 0.55rem;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 1.15rem;
+}
+
+.site-footer-whatsapp-status {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0;
+  color: #d3d9ce;
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.site-footer-whatsapp-status span:first-child {
+  color: #e2bd70;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.site-footer-bottom {
+  max-width: 1440px;
+  margin: clamp(2rem, 4vw, 3.5rem) auto 0;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgb(247 245 235 / 20%);
+}
+
+.site-footer-bottom p {
+  margin: 0;
+  color: #d3d9ce;
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .site-footer-inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    gap: 2rem;
+  }
+
+  .site-footer-whatsapp {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .site-footer-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .site-footer-whatsapp {
+    grid-column: 1;
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .site-footer-navigation ul {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer-navigation a {
+    transition-duration: 0.01ms;
   }
 }
