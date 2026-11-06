@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
 
-const navigation = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Our work", href: "#our-work" },
-  { label: "Impact", href: "#impact" },
-];
-
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const isAboutPage = window.location.pathname.replace(/\/+$/, "") === "/about";
+  const homeHref = isAboutPage ? "/#home" : "#home";
 
   useEffect(() => {
     function handleEscape(event: KeyboardEvent) {
@@ -19,13 +14,30 @@ function App() {
     return () => window.removeEventListener("keydown", handleEscape);
   }, []);
 
+  useEffect(() => {
+    if (isAboutPage) document.title = "About Her Legacy Agric";
+  }, [isAboutPage]);
+
+  const pageNavigation = [
+    { label: "Home", href: homeHref },
+    { label: "About", href: "/about" },
+    {
+      label: "Our work",
+      href: isAboutPage ? "/#our-work" : "#our-work",
+    },
+    {
+      label: "Impact",
+      href: isAboutPage ? "/#impact" : "#impact",
+    },
+  ];
+
   return (
     <>
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
       <header className="site-header">
-        <a className="brand" href="#home" aria-label="Her Legacy Agric home">
+        <a className="brand" href={homeHref} aria-label="Her Legacy Agric home">
           <span className="brand-mark">
             <img src="/her-legacy-logo.png" alt="" />
           </span>
@@ -52,22 +64,121 @@ function App() {
           className={`primary-navigation${menuOpen ? " is-open" : ""}`}
           aria-label="Main navigation"
         >
-          {navigation.map((item) => (
+          {pageNavigation.map((item) => (
             <a
               key={item.label}
               href={item.href}
-              aria-current={item.label === "Home" ? "page" : undefined}
+              aria-current={
+                (item.label === "About" && isAboutPage) ||
+                (item.label === "Home" && !isAboutPage)
+                  ? "page"
+                  : undefined
+              }
               onClick={() => setMenuOpen(false)}
             >
               {item.label}
             </a>
           ))}
-          <a className="nav-cta" href="#contact" onClick={() => setMenuOpen(false)}>
+          <a
+            className="nav-cta"
+            href={isAboutPage ? "/#contact" : "#contact"}
+            onClick={() => setMenuOpen(false)}
+          >
             Get in touch <span aria-hidden="true">↗</span>
           </a>
         </nav>
       </header>
 
+      {isAboutPage ? (
+        <main id="main-content">
+          <section className="about-story" aria-labelledby="about-story-title">
+            <div className="about-story-inner">
+              <div className="about-story-copy">
+                <p className="about-story-eyebrow">
+                  <span aria-hidden="true" />
+                  About Her Legacy Agric
+                </p>
+                <h1 id="about-story-title">
+                  From crops
+                  <br />
+                  to <em>finished</em>
+                  <br />
+                  products.
+                </h1>
+                <div className="about-story-narrative">
+                  <p>
+                    Her Legacy Agric is a start-up Zambian agribusiness that
+                    grows crops and processes them into finished products.
+                  </p>
+                  <p>
+                    Its first farming plans are for maize and soya beans on
+                    leased, irrigated land near Lusaka, with farming set to
+                    begin in the first half of 2027.
+                  </p>
+                </div>
+              </div>
+
+              <aside className="about-story-details" aria-label="First farming plans">
+                <div className="about-story-mark" aria-hidden="true">
+                  <span>01</span>
+                  <span className="about-story-sun" />
+                  <span className="about-story-furrows" />
+                </div>
+                <p className="about-story-details-label">The first farming step</p>
+                <dl>
+                  <div>
+                    <dt>Location</dt>
+                    <dd>Near Lusaka, Zambia</dd>
+                  </div>
+                  <div>
+                    <dt>Land</dt>
+                    <dd>Leased and irrigated</dd>
+                  </div>
+                  <div>
+                    <dt>Crops</dt>
+                    <dd>Maize and soya beans</dd>
+                  </div>
+                  <div>
+                    <dt>Starting</dt>
+                    <dd>First half of 2027</dd>
+                  </div>
+                </dl>
+              </aside>
+            </div>
+          </section>
+          <section
+            className="about-purpose"
+            aria-labelledby="about-purpose-title"
+          >
+            <div className="about-purpose-inner">
+              <header className="about-purpose-heading">
+                <p className="about-purpose-eyebrow">Our direction</p>
+                <h2 id="about-purpose-title">Vision &amp; mission</h2>
+              </header>
+
+              <div className="about-purpose-content">
+                <article className="about-purpose-vision">
+                  <h3>Vision</h3>
+                  <blockquote>
+                    <p>
+                      Food security for Zambians, and recognition as a leading
+                      pioneer of quality, nutritious, affordable products.
+                    </p>
+                  </blockquote>
+                </article>
+
+                <article className="about-purpose-mission">
+                  <h3>Mission</h3>
+                  <p>
+                    To grow crops and process them into finished products,
+                    beginning with plans to farm maize and soya beans in Lusaka the first half of 2027.
+                  </p>
+                </article>
+              </div>
+            </div>
+          </section>
+        </main>
+      ) : (
       <main id="main-content">
         <section className="hero" id="home" aria-labelledby="hero-title">
           <div className="hero-copy">
@@ -90,7 +201,7 @@ function App() {
               <a className="button button-primary" href="#our-work">
                 Discover our work <span aria-hidden="true">↗</span>
               </a>
-              <a className="text-link" href="#about">
+              <a className="text-link" href="/about">
                 Our story <span aria-hidden="true">→</span>
               </a>
             </div>
@@ -299,6 +410,7 @@ function App() {
           </div>
         </section>
       </main>
+      )}
     </>
   );
 }
