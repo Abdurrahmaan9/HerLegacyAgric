@@ -1071,12 +1071,18 @@ function App() {
             </ul>
           </nav>
 
-          <div className="site-footer-whatsapp" role="status" aria-label="WhatsApp contact unavailable">
+          <div className="site-footer-whatsapp">
             <p className="site-footer-heading">WhatsApp</p>
-            <p className="site-footer-whatsapp-label">Click to chat</p>
-            <p className="site-footer-whatsapp-status">
-              <span>+260773784093</span>
-            </p>
+            <a
+              className="site-footer-whatsapp-link"
+              href="https://wa.me/260773784093"
+              aria-label="Chat with Her Legacy Agric on WhatsApp at +260773784093"
+            >
+              <p className="site-footer-whatsapp-label">Click to chat</p>
+              <p className="site-footer-whatsapp-status">
+                <span>+260773784093</span>
+              </p>
+            </a>
           </div>
         </div>
         <div className="site-footer-bottom">
