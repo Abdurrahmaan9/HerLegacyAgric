@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const isAboutPage = window.location.pathname.replace(/\/+$/, "") === "/about";
-  const homeHref = isAboutPage ? "/#home" : "#home";
+  const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
+  const isHomePage = currentPath === "/";
+  const isAboutPage = currentPath === "/about";
+  const isCropsPage = currentPath === "/what-we-grow-and-make";
+  const isRoadmapPage = currentPath === "/our-roadmap";
+  const homeHref = isHomePage ? "#home" : "/#home";
 
   useEffect(() => {
     function handleEscape(event: KeyboardEvent) {
@@ -15,19 +19,27 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (isAboutPage) document.title = "About Her Legacy Agric";
-  }, [isAboutPage]);
+    if (isAboutPage) {
+      document.title = "About Her Legacy Agric";
+    } else if (isCropsPage) {
+      document.title = "What We Grow and Make | Her Legacy Agric";
+    } else if (isRoadmapPage) {
+      document.title = "Our Roadmap | Her Legacy Agric";
+    }
+  }, [isAboutPage, isCropsPage, isRoadmapPage]);
 
   const pageNavigation = [
     { label: "Home", href: homeHref },
     { label: "About", href: "/about" },
+    { label: "What we grow & make", href: "/what-we-grow-and-make" },
+    { label: "Our roadmap", href: "/our-roadmap" },
     {
       label: "Our work",
-      href: isAboutPage ? "/#our-work" : "#our-work",
+      href: isHomePage ? "#our-work" : "/#our-work",
     },
     {
       label: "Impact",
-      href: isAboutPage ? "/#impact" : "#impact",
+      href: isHomePage ? "#impact" : "/#impact",
     },
   ];
 
@@ -70,7 +82,9 @@ function App() {
               href={item.href}
               aria-current={
                 (item.label === "About" && isAboutPage) ||
-                (item.label === "Home" && !isAboutPage)
+                (item.label === "What we grow & make" && isCropsPage) ||
+                (item.label === "Our roadmap" && isRoadmapPage) ||
+                (item.label === "Home" && isHomePage)
                   ? "page"
                   : undefined
               }
@@ -81,7 +95,7 @@ function App() {
           ))}
           <a
             className="nav-cta"
-            href={isAboutPage ? "/#contact" : "#contact"}
+            href={isHomePage ? "#contact" : "/#contact"}
             onClick={() => setMenuOpen(false)}
           >
             Get in touch <span aria-hidden="true">↗</span>
@@ -214,6 +228,192 @@ function App() {
                   achieved.
                 </p>
               </div>
+            </div>
+          </section>
+        </main>
+      ) : isCropsPage ? (
+        <main id="main-content">
+          <section className="crops-page" aria-labelledby="crops-page-title">
+            <div className="crops-page-inner">
+              <div className="crops-page-copy">
+                <p className="crops-page-eyebrow">
+                  <span aria-hidden="true" />
+                  Planned Phase 1 crops
+                </p>
+                <h1 id="crops-page-title">
+                  What we grow
+                  <br />
+                  <em>and make.</em>
+                </h1>
+                <p className="crops-page-intro">
+                  Her Legacy Agric is preparing to farm maize and soya beans on
+                  leased, irrigated land near Lusaka, starting in the first half
+                  of 2027.
+                </p>
+              </div>
+
+              <aside className="crops-plan" aria-label="Planned Phase 1 crops">
+                <p className="crops-plan-label">
+                  <span>Phase 1</span>
+                  <span>Planned</span>
+                </p>
+                <ol className="crops-list">
+                  <li>
+                    <span aria-hidden="true">01</span>
+                    <h2>Maize</h2>
+                  </li>
+                  <li>
+                    <span aria-hidden="true">02</span>
+                    <h2>Soya beans</h2>
+                  </li>
+                </ol>
+                <dl className="crops-facts">
+                  <div>
+                    <dt>Location</dt>
+                    <dd>Near Lusaka</dd>
+                  </div>
+                  <div>
+                    <dt>Land</dt>
+                    <dd>Leased and irrigated</dd>
+                  </div>
+                  <div>
+                    <dt>Starting</dt>
+                    <dd>First half of 2027</dd>
+                  </div>
+                </dl>
+              </aside>
+            </div>
+          </section>
+
+          <section
+            className="roadmap future-portfolio"
+            aria-labelledby="future-portfolio-title"
+          >
+            <div className="roadmap-inner">
+              <header className="roadmap-heading">
+                <p className="roadmap-eyebrow">Planned beyond Phase 1</p>
+                <h2 id="future-portfolio-title">Future portfolio</h2>
+              </header>
+
+              <ol className="roadmap-timeline" aria-label="Future phases">
+                <li className="roadmap-phase">
+                  <span className="roadmap-marker" aria-hidden="true">02</span>
+                  <article className="roadmap-content">
+                    <p className="roadmap-phase-label">Phase 2</p>
+                    <h3>Processing</h3>
+                    <p>Building our own plant.</p>
+                    <p className="roadmap-status">Coming soon</p>
+                  </article>
+                </li>
+                <li className="roadmap-phase">
+                  <span className="roadmap-marker" aria-hidden="true">03</span>
+                  <article className="roadmap-content">
+                    <p className="roadmap-phase-label">Phase 3</p>
+                    <h3>Diversification</h3>
+                    <p>
+                      Wheat, groundnuts, onions, tomatoes and vegetables, plus
+                      products such as cereal and peanut butter.
+                    </p>
+                    <p className="roadmap-status">Coming soon</p>
+                  </article>
+                </li>
+                <li className="roadmap-phase">
+                  <span className="roadmap-marker" aria-hidden="true">04</span>
+                  <article className="roadmap-content">
+                    <p className="roadmap-phase-label">Phase 4</p>
+                    <h3>Expansion</h3>
+                    <p>Branded stores in under-served areas of the country.</p>
+                    <p className="roadmap-status">Coming soon</p>
+                  </article>
+                </li>
+              </ol>
+            </div>
+          </section>
+        </main>
+      ) : isRoadmapPage ? (
+        <main id="main-content">
+          <section
+            className="roadmap roadmap-page"
+            aria-labelledby="roadmap-page-title"
+          >
+            <div className="roadmap-inner">
+              <header className="roadmap-heading">
+                <p className="roadmap-eyebrow">Our roadmap</p>
+                <h1 id="roadmap-page-title">
+                  A growing legacy,
+                  <br />
+                  <span>step by step.</span>
+                </h1>
+                <p>
+                  Phase 1 is planned to focus on farming maize and soya beans.
+                </p>
+              </header>
+
+              <ol className="roadmap-timeline" aria-label="Planned roadmap">
+                <li className="roadmap-phase">
+                  <span className="roadmap-marker" aria-hidden="true">
+                    01
+                  </span>
+                  <article className="roadmap-content roadmap-page-content">
+                    <p className="roadmap-phase-label">Phase 1 · Planned</p>
+                    <h2>Farming</h2>
+                    <p>
+                      Farming is planned to start in the first half of 2027 on
+                      leased, irrigated land near Lusaka.
+                    </p>
+                    <dl className="roadmap-page-facts">
+                      <div>
+                        <dt>Crops</dt>
+                        <dd>Maize and soya beans</dd>
+                      </div>
+                      <div>
+                        <dt>Planned sales</dt>
+                        <dd>
+                          Crops to be sold to the Food Reserve Agency,
+                          manufacturers and supermarkets.
+                        </dd>
+                      </div>
+                    </dl>
+                  </article>
+                </li>
+                <li className="roadmap-phase">
+                  <span className="roadmap-marker" aria-hidden="true">
+                    02
+                  </span>
+                  <article className="roadmap-content roadmap-page-content">
+                    <p className="roadmap-phase-label">Phase 2 · Planned</p>
+                    <h2>Processing</h2>
+                    <p>Building our own plant.</p>
+                    <p className="roadmap-status">Coming soon</p>
+                  </article>
+                </li>
+                <li className="roadmap-phase">
+                  <span className="roadmap-marker" aria-hidden="true">
+                    03
+                  </span>
+                  <article className="roadmap-content roadmap-page-content">
+                    <p className="roadmap-phase-label">Phase 3 · Planned</p>
+                    <h2>Diversification</h2>
+                    <p>
+                      Future plans include wheat, groundnuts, onions, tomatoes
+                      and vegetables, as well as products such as cereal and
+                      peanut butter.
+                    </p>
+                    <p className="roadmap-status">Coming soon</p>
+                  </article>
+                </li>
+                <li className="roadmap-phase">
+                  <span className="roadmap-marker" aria-hidden="true">
+                    04
+                  </span>
+                  <article className="roadmap-content roadmap-page-content">
+                    <p className="roadmap-phase-label">Phase 4 · Planned</p>
+                    <h2>Expansion</h2>
+                    <p>Branded stores in under-served areas of the country.</p>
+                    <p className="roadmap-status">Coming soon</p>
+                  </article>
+                </li>
+              </ol>
             </div>
           </section>
         </main>
