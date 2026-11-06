@@ -14,6 +14,7 @@ function App() {
   const isCropsPage = currentPath === "/what-we-grow-and-make";
   const isRoadmapPage = currentPath === "/our-roadmap";
   const isInvestorPage = currentPath === "/invest-and-partner";
+  const isContactPage = currentPath === "/contact";
   const homeHref = isHomePage ? "#home" : "/#home";
 
   useEffect(() => {
@@ -34,8 +35,10 @@ function App() {
       document.title = "Our Roadmap | Her Legacy Agric";
     } else if (isInvestorPage) {
       document.title = "Invest & Partner | Her Legacy Agric";
+    } else if (isContactPage) {
+      document.title = "Contact | Her Legacy Agric";
     }
-  }, [isAboutPage, isCropsPage, isRoadmapPage, isInvestorPage]);
+  }, [isAboutPage, isCropsPage, isRoadmapPage, isInvestorPage, isContactPage]);
 
   const pageNavigation = [
     { label: "Home", href: homeHref },
@@ -134,7 +137,8 @@ function App() {
           ))}
           <a
             className="nav-cta"
-            href={isHomePage ? "#contact" : "/#contact"}
+            href="/contact"
+            aria-current={isContactPage ? "page" : undefined}
             onClick={() => setMenuOpen(false)}
           >
             Get in touch <span aria-hidden="true">↗</span>
@@ -639,6 +643,54 @@ function App() {
                     </p>
                   )}
                 </form>
+              </section>
+            </div>
+          </section>
+        </main>
+      ) : isContactPage ? (
+        <main id="main-content">
+          <section className="contact-page" aria-labelledby="contact-page-title">
+            <div className="contact-page-inner">
+              <header className="contact-page-heading">
+                <p className="contact-page-eyebrow">
+                  <span aria-hidden="true" />
+                  Contact
+                </p>
+                <h1 id="contact-page-title">Contact</h1>
+                <span className="contact-page-index" aria-hidden="true">
+                  01 <i /> 04
+                </span>
+              </header>
+
+              <section
+                className="contact-details"
+                aria-labelledby="contact-details-title"
+              >
+                <div className="contact-details-heading">
+                  <div>
+                    <p className="contact-details-kicker">Her Legacy Agric</p>
+                    <h2 id="contact-details-title">Contact details</h2>
+                  </div>
+                  <p className="contact-details-note">Details to be added</p>
+                </div>
+                <dl className="contact-details-list">
+                  <div>
+                    <dt><span aria-hidden="true">01</span> Phone</dt>
+                    <dd>[phone]</dd>
+                  </div>
+                  <div>
+                    <dt><span aria-hidden="true">02</span> Email</dt>
+                    <dd>[email]</dd>
+                  </div>
+                  <div>
+                    <dt><span aria-hidden="true">03</span> Address</dt>
+                    <dd>[address]</dd>
+                  </div>
+                  <div>
+                    <dt><span aria-hidden="true">04</span> Social links</dt>
+                    <dd>[social links]</dd>
+                  </div>
+                </dl>
               </section>
             </div>
           </section>
