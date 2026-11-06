@@ -285,6 +285,19 @@ function App() {
             </ol>
           </div>
         </section>
+
+        <section className="home-cta" id="contact" aria-labelledby="home-cta-title">
+          <div className="home-cta-inner">
+            <div className="home-cta-copy">
+              <p className="home-cta-eyebrow">Invest &amp; partner</p>
+              <h2 id="home-cta-title">Your dreams will always live on.</h2>
+            </div>
+            <a className="home-cta-link" href="/invest-and-partner">
+              Explore investing &amp; partnering
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </section>
       </main>
     </>
   );
