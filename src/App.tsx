@@ -177,6 +177,45 @@ function App() {
               </div>
             </div>
           </section>
+          <section
+            className="about-legacy"
+            aria-labelledby="about-legacy-title"
+          >
+            <div className="about-legacy-inner">
+              <div className="about-legacy-story">
+                <p className="about-legacy-eyebrow">What our name stands for</p>
+                <h2 id="about-legacy-title">
+                  Why Her <em>Legacy</em>
+                </h2>
+                <p className="about-legacy-intro">
+                  For this business, the name brings agriculture and legacy
+                  together: work today, with the hope that its value will live
+                  on.
+                </p>
+                <blockquote className="about-legacy-tagline">
+                  <p>Your dreams will always live on.</p>
+                </blockquote>
+              </div>
+
+              <div className="about-legacy-aspirations">
+                <p className="about-legacy-label">The future we hope to help build</p>
+                <p className="about-legacy-vision">
+                  Food security for Zambians, and recognition as a leading
+                  pioneer of quality, nutritious, affordable products.
+                </p>
+                <ul>
+                  <li>Food security</li>
+                  <li>Jobs</li>
+                  <li>Less dependence on imports</li>
+                  <li>A stronger Zambian brand</li>
+                </ul>
+                <p className="about-legacy-note">
+                  These are the goals behind the name—not impacts already
+                  achieved.
+                </p>
+              </div>
+            </div>
+          </section>
         </main>
       ) : (
       <main id="main-content">
