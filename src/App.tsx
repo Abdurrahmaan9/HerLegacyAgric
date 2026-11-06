@@ -713,15 +713,15 @@ function App() {
                 <dl className="contact-details-list">
                   <div>
                     <dt><span aria-hidden="true">01</span> Phone</dt>
-                    <dd>[phone]</dd>
+                    <dd>0773 784 093</dd>
                   </div>
                   <div>
                     <dt><span aria-hidden="true">02</span> Email</dt>
-                    <dd>[email]</dd>
+                    <dd>herlegacyagric@gmail.com</dd>
                   </div>
                   <div>
                     <dt><span aria-hidden="true">03</span> Address</dt>
-                    <dd>[address]</dd>
+                    <dd>Lusaka, Zambia</dd>
                   </div>
                   <div>
                     <dt><span aria-hidden="true">04</span> Social links</dt>
@@ -1064,8 +1064,8 @@ function App() {
             <ul>
               <li><a href="/">Home</a></li>
               <li><a href="/about">About</a></li>
-              <li><a href="/what-we-grow-and-make">What we grow and make</a></li>
-              <li><a href="/our-roadmap">Our roadmap</a></li>
+              <li><a href="/what-we-grow-and-make">What we grow</a></li>
+              <li><a href="/our-roadmap">Roadmap</a></li>
               <li><a href="/invest-and-partner">Invest and partner</a></li>
               <li><a href="/contact">Contact</a></li>
             </ul>
@@ -1075,8 +1075,7 @@ function App() {
             <p className="site-footer-heading">WhatsApp</p>
             <p className="site-footer-whatsapp-label">Click to chat</p>
             <p className="site-footer-whatsapp-status">
-              <span>[number]</span>
-              <span>Number to be added · not available yet</span>
+              <span>+260773784093</span>
             </p>
           </div>
         </div>
