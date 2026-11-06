@@ -7,6 +7,7 @@ function App() {
   const isAboutPage = currentPath === "/about";
   const isCropsPage = currentPath === "/what-we-grow-and-make";
   const isRoadmapPage = currentPath === "/our-roadmap";
+  const isInvestorPage = currentPath === "/invest-and-partner";
   const homeHref = isHomePage ? "#home" : "/#home";
 
   useEffect(() => {
@@ -25,14 +26,17 @@ function App() {
       document.title = "What We Grow and Make | Her Legacy Agric";
     } else if (isRoadmapPage) {
       document.title = "Our Roadmap | Her Legacy Agric";
+    } else if (isInvestorPage) {
+      document.title = "Invest & Partner | Her Legacy Agric";
     }
-  }, [isAboutPage, isCropsPage, isRoadmapPage]);
+  }, [isAboutPage, isCropsPage, isRoadmapPage, isInvestorPage]);
 
   const pageNavigation = [
     { label: "Home", href: homeHref },
     { label: "About", href: "/about" },
-    { label: "What we grow & make", href: "/what-we-grow-and-make" },
+    { label: "What we grow", href: "/what-we-grow-and-make" },
     { label: "Our roadmap", href: "/our-roadmap" },
+    { label: "Invest & partner", href: "/invest-and-partner" },
     {
       label: "Our work",
       href: isHomePage ? "#our-work" : "/#our-work",
@@ -82,8 +86,9 @@ function App() {
               href={item.href}
               aria-current={
                 (item.label === "About" && isAboutPage) ||
-                (item.label === "What we grow & make" && isCropsPage) ||
+                (item.label === "What we grow" && isCropsPage) ||
                 (item.label === "Our roadmap" && isRoadmapPage) ||
+                (item.label === "Invest & partner" && isInvestorPage) ||
                 (item.label === "Home" && isHomePage)
                   ? "page"
                   : undefined
@@ -414,6 +419,82 @@ function App() {
                   </article>
                 </li>
               </ol>
+            </div>
+          </section>
+        </main>
+      ) : isInvestorPage ? (
+        <main id="main-content">
+          <section className="invest-page" aria-labelledby="invest-page-title">
+            <div className="invest-page-inner">
+              <div className="invest-intro">
+                <p className="invest-eyebrow">
+                  <span aria-hidden="true" />
+                  Invest &amp; partner
+                </p>
+                <h1 id="invest-page-title">
+                  A growing plan,
+                  <br />
+                  <em>rooted in Zambia.</em>
+                </h1>
+                <p className="invest-intro-copy">
+                  Her Legacy Agric is a start-up Zambian agribusiness preparing
+                  to farm maize and soya beans on leased, irrigated land near
+                  Lusaka in the first half of 2027.
+                </p>
+                <p className="invest-intro-copy">
+                  Our four-phase plan begins with farming, then looks ahead to
+                  an own processing plant, a wider range of crops and products,
+                  and branded stores in under-served areas.
+                </p>
+              </div>
+
+              <div className="invest-plan">
+                <p className="invest-plan-label">A four-phase plan</p>
+                <ol className="invest-phases">
+                  <li>
+                    <span aria-hidden="true">01</span>
+                    <div>
+                      <h2>Farming</h2>
+                      <p>Maize and soya beans.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <span aria-hidden="true">02</span>
+                    <div>
+                      <h2>Processing</h2>
+                      <p>An own processing plant.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <span aria-hidden="true">03</span>
+                    <div>
+                      <h2>Diversification</h2>
+                      <p>
+                        Wheat, groundnuts, onions, tomatoes and vegetables;
+                        cereal and peanut butter.
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <span aria-hidden="true">04</span>
+                    <div>
+                      <h2>Expansion</h2>
+                      <p>Branded stores in under-served areas.</p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+
+              <div className="invest-vision">
+                <p>Our vision</p>
+                <blockquote>
+                  Food security for Zambians, and quality, nutritious,
+                  affordable products.
+                </blockquote>
+                <a href="/our-roadmap">
+                  Explore our roadmap <span aria-hidden="true">↗</span>
+                </a>
+              </div>
             </div>
           </section>
         </main>
