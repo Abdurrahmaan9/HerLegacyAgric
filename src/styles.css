@@ -2721,3 +2721,199 @@ h1 span {
     transition-duration: 0.01ms !important;
   }
 }
+
+.invest-request {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: start;
+  padding-top: clamp(2.5rem, 5vw, 4.5rem);
+  border-top: 1px solid rgb(24 55 31 / 22%);
+}
+
+.invest-request-intro {
+  max-width: 430px;
+}
+
+.invest-request-eyebrow {
+  margin: 0 0 0.8rem;
+  color: #80622d;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.invest-request-intro h2 {
+  margin: 0;
+  color: var(--deep-forest);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2rem, 3.4vw, 3.15rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 1.1;
+}
+
+.invest-request-intro > p:not(.invest-request-eyebrow) {
+  margin: 1rem 0 0;
+  color: #52604d;
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.invest-request-intro .invest-request-notice {
+  padding-left: 0.9rem;
+  border-left: 2px solid var(--gold);
+  color: #596552;
+  font-size: 0.78rem;
+}
+
+.invest-request-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.15rem;
+  padding: clamp(1.35rem, 3vw, 2rem);
+  border: 1px solid rgb(24 55 31 / 13%);
+  background: rgb(255 253 246 / 82%);
+  box-shadow: 7px 7px 0 rgb(217 201 156 / 68%);
+}
+
+.invest-request-field {
+  display: grid;
+  align-content: start;
+  gap: 0.45rem;
+}
+
+.invest-request-field:last-of-type {
+  grid-column: 1 / -1;
+}
+
+.invest-request-field label {
+  color: var(--deep-forest);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.invest-request-required,
+.invest-request-optional {
+  color: #65705e;
+  font-size: 0.69rem;
+  font-weight: 400;
+}
+
+.invest-request-field input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid rgb(24 55 31 / 30%);
+  border-radius: 0;
+  background: #fffefa;
+  color: var(--deep-forest);
+  font: inherit;
+}
+
+.invest-request-field input:focus-visible {
+  border-color: var(--forest);
+  outline: 3px solid rgb(200 152 63 / 38%);
+  outline-offset: 2px;
+}
+
+.invest-request-field input[aria-invalid="true"] {
+  border-color: #9a3b2e;
+}
+
+.invest-request-field input[aria-invalid="true"]:focus-visible {
+  outline-color: rgb(154 59 46 / 30%);
+}
+
+.invest-request-error,
+.invest-request-form-error {
+  color: #8b3026;
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.invest-request-form-error {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-weight: 600;
+}
+
+.invest-request-submit {
+  display: inline-flex;
+  min-height: 48px;
+  grid-column: 1 / -1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--forest);
+  background: var(--forest);
+  color: #fffdf3;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: left;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.invest-request-submit:hover {
+  background: #264a2d;
+}
+
+.invest-request-submit:focus-visible {
+  outline: 3px solid #a47725;
+  outline-offset: 4px;
+}
+
+.invest-request-success {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 0.9rem 1rem;
+  border-left: 3px solid var(--leaf);
+  background: #edf1e4;
+  color: var(--deep-forest);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 1000px) {
+  .invest-request {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .invest-request {
+    grid-column: 1;
+    grid-template-columns: 1fr;
+    gap: 1.7rem;
+    padding-top: 2.4rem;
+  }
+
+  .invest-request-intro h2 {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+
+  .invest-request-form {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.25rem;
+    box-shadow: 5px 5px 0 rgb(217 201 156 / 68%);
+  }
+
+  .invest-request-field:last-of-type {
+    grid-column: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .invest-request-submit {
+    transition-duration: 0.01ms;
+  }
+}

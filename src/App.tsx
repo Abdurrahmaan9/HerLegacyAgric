@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
+import type { FormEvent } from "react";
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [requestErrors, setRequestErrors] = useState<{
+    name?: string;
+    email?: string;
+  }>({});
+  const [requestSubmitted, setRequestSubmitted] = useState(false);
   const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
   const isHomePage = currentPath === "/";
   const isAboutPage = currentPath === "/about";
@@ -46,6 +52,34 @@ function App() {
       href: isHomePage ? "#impact" : "/#impact",
     },
   ];
+
+  function handleRequestSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const nameInput = form.elements.namedItem("name") as HTMLInputElement;
+    const emailInput = form.elements.namedItem("email") as HTMLInputElement;
+    const errors: { name?: string; email?: string } = {};
+
+    if (!nameInput.value.trim()) {
+      errors.name = "Please enter your name.";
+    }
+
+    if (!emailInput.value.trim()) {
+      errors.email = "Please enter your email address.";
+    } else if (emailInput.validity.typeMismatch) {
+      errors.email = "Please enter a valid email address.";
+    }
+
+    setRequestErrors(errors);
+    setRequestSubmitted(false);
+
+    if (Object.keys(errors).length > 0) {
+      (errors.name ? nameInput : emailInput).focus();
+      return;
+    }
+
+    setRequestSubmitted(true);
+  }
 
   return (
     <>
@@ -495,6 +529,117 @@ function App() {
                   Explore our roadmap <span aria-hidden="true">↗</span>
                 </a>
               </div>
+
+              <section
+                className="invest-request"
+                aria-labelledby="invest-request-title"
+              >
+                <div className="invest-request-intro">
+                  <p className="invest-request-eyebrow">Investment proposal</p>
+                  <h2 id="invest-request-title">Start a conversation.</h2>
+                  <p>
+                    Share your name and email to register your interest in
+                    investing or partnering with Her Legacy Agric.
+                  </p>
+                  <p className="invest-request-notice">
+                    This demo checks your details in your browser only. It
+                    doesn’t send or store your request; a submission service
+                    must be connected before launch.
+                  </p>
+                </div>
+
+                <form
+                  className="invest-request-form"
+                  noValidate
+                  onSubmit={handleRequestSubmit}
+                  onChange={() => {
+                    setRequestErrors({});
+                    setRequestSubmitted(false);
+                  }}
+                >
+                  <div className="invest-request-field">
+                    <label htmlFor="proposal-name">
+                      Name <span className="invest-request-required">(required)</span>
+                    </label>
+                    <input
+                      autoComplete="name"
+                      aria-invalid={Boolean(requestErrors.name)}
+                      aria-describedby={
+                        requestErrors.name ? "proposal-name-error" : undefined
+                      }
+                      id="proposal-name"
+                      name="name"
+                      required
+                    />
+                    {requestErrors.name && (
+                      <span
+                        className="invest-request-error"
+                        id="proposal-name-error"
+                      >
+                        {requestErrors.name}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="invest-request-field">
+                    <label htmlFor="proposal-email">
+                      Email address{" "}
+                      <span className="invest-request-required">(required)</span>
+                    </label>
+                    <input
+                      autoComplete="email"
+                      aria-invalid={Boolean(requestErrors.email)}
+                      aria-describedby={
+                        requestErrors.email
+                          ? "proposal-email-error"
+                          : undefined
+                      }
+                      id="proposal-email"
+                      name="email"
+                      required
+                      type="email"
+                    />
+                    {requestErrors.email && (
+                      <span
+                        className="invest-request-error"
+                        id="proposal-email-error"
+                      >
+                        {requestErrors.email}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="invest-request-field">
+                    <label htmlFor="proposal-organization">
+                      Organization or company{" "}
+                      <span className="invest-request-optional">(optional)</span>
+                    </label>
+                    <input
+                      autoComplete="organization"
+                      id="proposal-organization"
+                      name="organization"
+                    />
+                  </div>
+
+                  {(requestErrors.name || requestErrors.email) && (
+                    <p className="invest-request-form-error" role="alert">
+                      Please correct the highlighted fields before continuing.
+                    </p>
+                  )}
+
+                  <button className="invest-request-submit" type="submit">
+                    Review request <span aria-hidden="true">↗</span>
+                  </button>
+
+                  {requestSubmitted && (
+                    <p className="invest-request-success" role="status">
+                      Your request passed local checks. This demo has not
+                      delivered or stored it; a submission service is needed
+                      before launch.
+                    </p>
+                  )}
+                </form>
+              </section>
             </div>
           </section>
         </main>
