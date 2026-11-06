@@ -8,7 +8,6 @@ function App() {
     email?: string;
   }>({});
   const [requestSubmitted, setRequestSubmitted] = useState(false);
-  const [contactFormChecked, setContactFormChecked] = useState(false);
   const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
   const isHomePage = currentPath === "/";
   const isAboutPage = currentPath === "/about";
@@ -117,7 +116,23 @@ function App() {
 
   function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setContactFormChecked(true);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const name = String(formData.get("name") ?? "").trim();
+    const email = String(formData.get("email") ?? "").trim();
+    const phone = String(formData.get("phone") ?? "").trim();
+    const message = String(formData.get("message") ?? "").trim();
+    const whatsappMessage = [
+      "Hello Her Legacy Agric,",
+      "",
+      message,
+      "",
+      `Name: ${name}`,
+      `Email: ${email}`,
+      ...(phone ? [`Phone: ${phone}`] : []),
+    ].join("\n");
+
+    window.location.href = `https://wa.me/260773784093?text=${encodeURIComponent(whatsappMessage)}`;
   }
 
   return (
@@ -742,15 +757,14 @@ function App() {
                     your contact details.
                   </p>
                   <p className="contact-message-notice">
-                    Demo only: this form does not send or store submissions. A
-                    submission service must be connected before launch.
+                    Your message and contact details will open in WhatsApp for
+                    you to review and send.
                   </p>
                 </div>
 
                 <form
                   className="contact-message-form"
                   onSubmit={handleContactSubmit}
-                  onChange={() => setContactFormChecked(false)}
                 >
                   <div className="contact-message-field">
                     <label htmlFor="contact-name">
@@ -802,16 +816,8 @@ function App() {
                   </div>
 
                   <button className="contact-message-submit" type="submit">
-                    Check message <span aria-hidden="true">↗</span>
+                    Continue to WhatsApp <span aria-hidden="true">↗</span>
                   </button>
-
-                  {contactFormChecked && (
-                    <p className="contact-message-success" role="status">
-                      Your details passed the browser checks. This demo has not
-                      sent or stored anything; a submission service is needed
-                      before launch.
-                    </p>
-                  )}
                 </form>
               </section>
             </div>
